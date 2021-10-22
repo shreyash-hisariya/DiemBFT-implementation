@@ -1,0 +1,77 @@
+######################## TEST CASE 1 : One Client - 1 Command Logger for Client: c1 ######################## 
+
+[INFO]: 2021-10-18 03:47:34   		 [ Client: c1 sending request to all the validators. REQUEST - c1 - 0 ]
+[INFO]: 2021-10-18 03:47:37   		 [ Client: c1 received result for the command from the validator v2 for  command c1 - 0 ]
+[INFO]: 2021-10-18 03:47:37   		 [ Client: c1 terminating. ]
+######################## TEST CASE 2 : One Client - 10 Command Logger for Client: c1 ######################## 
+
+[INFO]: 2021-10-18 03:47:37   		 [ Client: c1 sending request to all the validators. REQUEST - c1 - 0 ]
+[INFO]: 2021-10-18 03:47:39   		 [ Client: c1 sending request to all the validators. REQUEST - c1 - 1 ]
+[INFO]: 2021-10-18 03:47:41   		 [ Client: c1 sending request to all the validators. REQUEST - c1 - 2 ]
+[INFO]: 2021-10-18 03:47:43   		 [ Client: c1 sending request to all the validators. REQUEST - c1 - 3 ]
+[INFO]: 2021-10-18 03:47:45   		 [ Client: c1 sending request to all the validators. REQUEST - c1 - 4 ]
+[INFO]: 2021-10-18 03:47:47   		 [ Client: c1 sending request to all the validators. REQUEST - c1 - 5 ]
+[INFO]: 2021-10-18 03:47:49   		 [ Client: c1 sending request to all the validators. REQUEST - c1 - 6 ]
+[INFO]: 2021-10-18 03:47:51   		 [ Client: c1 sending request to all the validators. REQUEST - c1 - 7 ]
+[INFO]: 2021-10-18 03:47:53   		 [ Client: c1 sending request to all the validators. REQUEST - c1 - 8 ]
+[INFO]: 2021-10-18 03:47:55   		 [ Client: c1 sending request to all the validators. REQUEST - c1 - 9 ]
+[INFO]: 2021-10-18 03:48:13   		 [ Client: c1 received result for the command from the validator v2 for  command c1 - 0 ]
+[INFO]: 2021-10-18 03:48:13   		 [ Client: c1 received result for the command from the validator v1 for  command c1 - 1 ]
+[INFO]: 2021-10-18 03:48:13   		 [ Client: c1 received result for the command from the validator v1 for  command c1 - 2 ]
+[INFO]: 2021-10-18 03:48:13   		 [ Client: c1 received result for the command from the validator v1 for  command c1 - 3 ]
+[INFO]: 2021-10-18 03:48:13   		 [ Client: c1 received result for the command from the validator v1 for  command c1 - 4 ]
+[INFO]: 2021-10-18 03:48:13   		 [ Client: c1 received result for the command from the validator v1 for  command c1 - 5 ]
+[INFO]: 2021-10-18 03:48:13   		 [ Client: c1 received result for the command from the validator v1 for  command c1 - 6 ]
+[INFO]: 2021-10-18 03:48:13   		 [ Client: c1 received result for the command from the validator v1 for  command c1 - 7 ]
+[INFO]: 2021-10-18 03:48:13   		 [ Client: c1 received result for the command from the validator v1 for  command c1 - 8 ]
+[INFO]: 2021-10-18 03:48:13   		 [ Client: c1 received result for the command from the validator v1 for  command c1 - 9 ]
+[INFO]: 2021-10-18 03:48:13   		 [ Client: c1 terminating. ]
+######################## TEST CASE 3 : 3 Clients - 1 Command  Logger for Client: c1 ######################## 
+
+[INFO]: 2021-10-18 03:48:13   		 [ Client: c1 sending request to all the validators. REQUEST - c1 - 0 ]
+[INFO]: 2021-10-18 03:48:16   		 [ Client: c1 received result for the command from the validator v2 for  command c1 - 0 ]
+[INFO]: 2021-10-18 03:48:16   		 [ Client: c1 terminating. ]
+######################## TEST CASE 4 : 3 Client - 3 commands with 1 validator timeout Logger for Client: c1 ######################## 
+
+[INFO]: 2021-10-18 03:48:17   		 [ Client: c1 sending request to all the validators. REQUEST - c1 - 0 ]
+[INFO]: 2021-10-18 03:48:19   		 [ Client: c1 sending request to all the validators. REQUEST - c1 - 1 ]
+[INFO]: 2021-10-18 03:48:21   		 [ Client: c1 sending request to all the validators. REQUEST - c1 - 2 ]
+[INFO]: 2021-10-18 03:48:27   		 [ Client: c1 received result for the command from the validator v2 for  command c1 - 0 ]
+[INFO]: 2021-10-18 03:48:27   		 [ Client: c1 received result for the command from the validator v2 for  command c1 - 1 ]
+[INFO]: 2021-10-18 03:48:27   		 [ Client: c1 received result for the command from the validator v2 for  command c1 - 2 ]
+[INFO]: 2021-10-18 03:48:27   		 [ Client: c1 terminating. ]
+######################## TEST CASE 5 : 1 Client - 3 commands with 3 validator timeout. TC is formed Logger for Client: c1 ######################## 
+
+[INFO]: 2021-10-18 03:48:27   		 [ Client: c1 sending request to all the validators. REQUEST - c1 - 0 ]
+[INFO]: 2021-10-18 03:48:29   		 [ Client: c1 sending request to all the validators. REQUEST - c1 - 1 ]
+[INFO]: 2021-10-18 03:48:31   		 [ Client: c1 sending request to all the validators. REQUEST - c1 - 2 ]
+[INFO]: 2021-10-18 03:48:38   		 [ Client: c1 received result for the command from the validator v2 for  command c1 - 0 ]
+[INFO]: 2021-10-18 03:48:38   		 [ Client: c1 received result for the command from the validator v2 for  command c1 - 1 ]
+[INFO]: 2021-10-18 03:48:38   		 [ Client: c1 received result for the command from the validator v2 for  command c1 - 2 ]
+[INFO]: 2021-10-18 03:48:38   		 [ Client: c1 terminating. ]
+######################## TEST CASE 6 : 2 Clients - 2 Command. Number of validators - 7 Logger for Client: c1 ######################## 
+
+[INFO]: 2021-10-18 03:48:38   		 [ Client: c1 sending request to all the validators. REQUEST - c1 - 0 ]
+[INFO]: 2021-10-18 03:48:40   		 [ Client: c1 sending request to all the validators. REQUEST - c1 - 1 ]
+[INFO]: 2021-10-18 03:48:45   		 [ Client: c1 received result for the command from the validator v2 for  command c1 - 0 ]
+[INFO]: 2021-10-18 03:48:45   		 [ Client: c1 received result for the command from the validator v2 for  command c1 - 1 ]
+[INFO]: 2021-10-18 03:48:45   		 [ Client: c1 terminating. ]
+######################## TEST CASE 7 : One Client - 3 Commands Logger for Client: c1 ######################## 
+
+[INFO]: 2021-10-18 03:48:45   		 [ Client: c1 sending request to all the validators. REQUEST - c1 - 0 ]
+[INFO]: 2021-10-18 03:48:47   		 [ Client: c1 sending request to all the validators. REQUEST - c1 - 1 ]
+[INFO]: 2021-10-18 03:48:49   		 [ Client: c1 sending request to all the validators. REQUEST - c1 - 2 ]
+[INFO]: 2021-10-18 03:48:56   		 [ Client: c1 received result for the command from the validator v2 for  command c1 - 0 ]
+[INFO]: 2021-10-18 03:48:56   		 [ Client: c1 received result for the command from the validator v2 for  command c1 - 1 ]
+[INFO]: 2021-10-18 03:48:56   		 [ Client: c1 received result for the command from the validator v2 for  command c1 - 2 ]
+[INFO]: 2021-10-18 03:48:56   		 [ Client: c1 terminating. ]
+######################## TEST CASE 8 : Client - 3 Commands 1 but  One Client - Faulty  Logger for Client: c1 ######################## 
+
+[INFO]: 2021-10-18 03:48:56   		 [ Client: c1 sending request to all the validators. REQUEST - c1 - 0 ]
+[INFO]: 2021-10-18 03:48:59   		 [ Client: c1 received result for the command from the validator v2 for  command c1 - 0 ]
+[INFO]: 2021-10-18 03:48:59   		 [ Client: c1 terminating. ]
+######################## TEST CASE 9 : One Validator - Faulty Logger for Client: c1 ######################## 
+
+[INFO]: 2021-10-18 03:52:25   		 [ Client: c1 sending request to all the validators. REQUEST - c1 - 0 ]
+[INFO]: 2021-10-18 03:52:29   		 [ Client: c1 received result for the command from the validator v2 for  command c1 - 0 ]
+[INFO]: 2021-10-18 03:52:29   		 [ Client: c1 terminating. ]

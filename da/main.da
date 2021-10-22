@@ -1,0 +1,247 @@
+import sys
+import time
+import random
+import os
+import signal
+import validator as validator
+from collections import OrderedDict
+from nacl.signing import SigningKey
+from nacl.signing import VerifyKey
+import json
+import io
+from time import gmtime, strftime
+
+import enum
+
+class LoggingLevel(enum.Enum):
+        NOTSET=0
+        DEBUG=1
+        INFO=2
+        WARNING=3
+        ERROR=4
+        CRITICAL=5
+
+class Client(process):
+
+    def setup(idx, client_id, validators, NOPS, client_delay_between_request,combined_public_signature_dict,private_key, timeoutWorkloadInfo,clients_faulty_list,comment_for_test_case):
+        self.idx = idx
+        self.client_id = client_id
+        self.cid = 0           # command id
+        self.results = dict()  # map of command id to result of command
+        self.count = dict()    # map of command id to number of responses
+        self._signature_dict=combined_public_signature_dict
+        self._signature_dict["private_key"]=private_key
+        self.client_delay_between_request=client_delay_between_request
+        self.NOPS=NOPS
+        self.duplicate_message = timeoutWorkloadInfo['duplicate_message']
+        self.clients_faulty_list=clients_faulty_list
+        self.comment_for_test_case=comment_for_test_case
+        self.logger_file= "../output/" + str(self.client_id)+'_'+str("Logger.txt")
+        self.initialiseLogger()
+
+    def run():
+        cmds = []
+        cnt = 0
+        for i in range(self.NOPS):
+            cmd = str(self.client_id) + " - " + str(i)
+            signature=self._signature_dict["private_key"].sign(str(cmd).encode('utf-8'))
+            self.logToFile(str("Client: "+self.client_id + " sending request to all the validators. REQUEST - " + cmd),LoggingLevel.INFO)
+            print(str("Client: "+self.client_id + " sending request to all the validators. REQUEST - " + cmd))
+
+            if self.client_id in self.clients_faulty_list:
+                signature=self._signature_dict["private_key"].sign(str(cmd+"Forge").encode('utf-8'))
+
+            send(('CLIENT_REQUEST', (self.client_id, cmd,signature)), to=validators)
+            time.sleep(client_delay_between_request)
+            cid += 1
+            cmds.append(cmd)
+            self.count[cmd] = 0
+
+        #await(each(cmd in cmds, has= self.count[cmd] == len(validators)))
+
+        while(len(self.results) != self.NOPS and cnt < 3):
+            cnt = cnt + 1
+            for c in self.count.keys():
+                if self.count[c] == 0:
+                    signature=self._signature_dict["private_key"].sign(str(c).encode('utf-8'))
+                    if self.client_id in self.clients_faulty_list:
+                        signature=self._signature_dict["private_key"].sign(str(cmd+"Forge").encode('utf-8'))
+                    send(('CLIENT_REQUEST', (self.client_id, c ,signature)), to=validators)
+                    time.sleep(0.5)
+
+        if self.client_id not in self.clients_faulty_list:
+            await(len(self.results) == (self.NOPS))
+        send(('done',), to=parent())
+        self.logToFile(str("Client: "+self.client_id + " terminating."),LoggingLevel.INFO)
+        print(str("Client: "+self.client_id + " terminating."))
+        #await(received(('done',)))
+
+
+    def receive(msg=('RESULT_RESPONSE', res)):
+
+        validator, cmd, status, signature = res
+        if self.verifySignature(validator,signature,"SUCCESS".encode('utf-8'))==False:
+            print("Response from the Faulty validator:", validator)
+            self.logToFile(str("Client: "+self.client_id + " received faulty response from the validator "+validator),LoggingLevel.INFO)
+            print(str("Client: "+self.client_id + " received faulty response from the validator "+validator))
+        else:
+            if cmd not in self.results:
+                self.logToFile(str("Client: "+self.client_id + " received result for the command from the validator "+validator+ " for  command " + cmd),LoggingLevel.INFO)
+                output(' RESPONSE RECEIVED FOR COMMAND - ', cmd)
+                self.results[cmd] = status
+            elif self.results[cmd] != status:
+                error('different result', cmd, status, 'than', self.results[cmd])
+            self.count[cmd] = self.count[cmd] + 1
+
+
+    def verifySignature(sender,signed_msg,generated_hexcode_signed_msg,client=False):
+
+        if client==False:
+            verify_key = VerifyKey(self._signature_dict["validators_public_key"][sender])
+        else:
+            verify_key = VerifyKey(self._signature_dict["clients_public_key"][sender])
+        try:
+            verify_key.verify(signed_msg)
+        except:
+            print("Signature was forged or corrupt in vote msg sent by",sender)
+            return False
+
+        if signed_msg.message!=generated_hexcode_signed_msg:
+            print("Packet  content was forged or corrupt sent by",sender)
+            return False
+        return True
+    def initialiseLogger():
+        print("CLIENT LOGGER",self.logger_file)
+        f = open(self.logger_file, "a")
+        msg = "######################## "+self.comment_for_test_case+" Logger for Client: " + self.client_id+" ######################## " + "\n\n"
+        f.write(msg)
+        f.close()
+
+    def logToFile(msg,level):
+        f = open(self.logger_file, "a")
+        msg = "[" +level.name+"]: " +strftime("%Y-%m-%d %H:%M:%S ", gmtime())+"  \t\t "+ "[ "+ msg + " ]\n"
+        f.write(msg)
+        f.close()
+
+
+class Runner(process):
+
+    def setup(config):
+        self.config=config
+
+    def generateKeys(validator_ids,client_ids):
+
+        #signature_dict{
+        #   "validators_public_key":{"specific_validator_id":validator_public_key}
+        #   "clients_public_key":{"specific_client_id":client_public_key}
+        #   }
+
+
+        #first generate signing_key for all the validators
+        private_keys_validators=[SigningKey.generate() for i in range(0,len(validator_ids)) ]
+        private_keys_clients=[SigningKey.generate() for i in range(0,len(client_ids)) ]
+
+        public_signing_keys_validators={}
+        for i in range(0,len(private_keys_validators)):
+            public_signing_keys_validators[validator_ids[i]]=private_keys_validators[i].verify_key.encode()
+
+        public_signing_keys_clients={}
+        for i in range(0,len(private_keys_clients)):
+            public_signing_keys_clients[client_ids[i]]=private_keys_clients[i].verify_key.encode()
+
+        combined_public_signature_dict={}
+        combined_public_signature_dict["validators_public_key"]=public_signing_keys_validators
+        combined_public_signature_dict["clients_public_key"]=public_signing_keys_clients
+        return combined_public_signature_dict,private_keys_validators,private_keys_clients
+
+
+    def run():
+        config=self.config
+        n_validators = config["number_of_validators"]
+        n_clients = config["number_of_clients"]
+        validator_ids=[]
+        client_ids = []
+        client_NOPS=config["workload_for_client"]["number_of_request"]
+        client_delay_between_request=config["workload_for_client"]["delay_between_request"]
+        workload_for_validator=config["workload_for_validator"]
+
+        F=config["F"]
+        delta_for_pacemaker=config["delta_for_pacemaker"]
+        comment_for_test_case=config["_comment"]
+        duplicate_message = config["duplicate_message"]
+        number_of_faulty_client=config["number_of_faulty_client"]
+        number_of_faulty_validators=config["number_of_faulty_validators"]
+        print("comment_for_test_case ",comment_for_test_case)
+
+        for i in range(1,n_validators+1):
+            validator_ids.append('v'+str(i))
+        for i in range(1,n_clients+1):
+            client_ids.append('c'+str(i))
+
+        validators = list(new(validator.Validator, num= n_validators))
+        clients = list(new(Client, num= n_clients))
+        combined_public_signature_dict,private_keys_validators,private_keys_clients=generateKeys(validator_ids,client_ids)
+
+        validator_dict = OrderedDict()
+        for i in range(0, len(validator_ids)):
+            id = validators[i]
+            validator_dict[validator_ids[i]]=id
+
+        client_dict = OrderedDict()
+        for i in range(0, len(client_ids)):
+            id = clients[i]
+            client_dict[client_ids[i]]=id
+
+        clients_faulty_list=random.sample(client_ids,number_of_faulty_client)
+        validators_faulty_list=random.sample(validator_ids,number_of_faulty_validators)
+        validators_getting_timeouts=random.sample(validator_ids,workload_for_validator["number_of_validators_getting_timed_out"])
+        timeouts_rounds=[workload_for_validator["round_getting_timeout"]]
+        timeout_duration=workload_for_validator["timeout_duration"]
+
+        timeoutWorkloadInfo={
+        "validators_getting_timeouts":validators_getting_timeouts,
+        "timeouts_rounds_list":timeouts_rounds,
+        "timeout_duration":timeout_duration,
+        "duplicate_message":duplicate_message
+        }
+
+        print("clients_faulty_list: ",clients_faulty_list)
+        print("validators_faulty_list: ",validators_faulty_list)
+
+        for i in range(n_validators):
+           setup(validators[i], args=(validator_ids[i], validator_dict, n_validators, combined_public_signature_dict,private_keys_validators[i], client_dict, timeoutWorkloadInfo,client_NOPS,F,delta_for_pacemaker, comment_for_test_case,validators_faulty_list))
+
+        for i in range(n_clients):
+           setup(clients[i], args=(clients[i], client_ids[i], validators, client_NOPS, client_delay_between_request, combined_public_signature_dict, private_keys_clients[i], timeoutWorkloadInfo,clients_faulty_list,comment_for_test_case))
+
+        start(validators)
+        start(clients)
+        await(each(c in clients, has=received(('done',), from_=c)))
+        output('Stopping clients and validators.')
+        for c in clients:
+            send(('done',), to= (c))
+
+        for v in validators:
+            send(('done',), to= (v))
+
+        send(('done',), to=parent())
+
+
+
+def main():
+
+    config(clock='Lamport')
+    config(channel='Reliable')
+    with open('workload_configuration.json',encoding='utf-8-sig') as f:
+        configuration = json.load(f)
+
+    for i in range(len(configuration)):
+        t=new(Runner)
+        setup(t, (configuration[i],))
+        start(t)
+        await(received(('done',), from_=t))
+        send(('done',), to= (t))
+
+    output('COMPLETED')
+
+

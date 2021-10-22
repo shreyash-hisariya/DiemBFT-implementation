@@ -1,0 +1,31 @@
+######################## TEST CASE 3 : 3 Clients - 1 Command  Logger for Client: c2 ######################## 
+
+[INFO]: 2021-10-18 03:48:13   		 [ Client: c2 sending request to all the validators. REQUEST - c2 - 0 ]
+[INFO]: 2021-10-18 03:48:16   		 [ Client: c2 received result for the command from the validator v2 for  command c2 - 0 ]
+[INFO]: 2021-10-18 03:48:16   		 [ Client: c2 terminating. ]
+######################## TEST CASE 4 : 3 Client - 3 commands with 1 validator timeout Logger for Client: c2 ######################## 
+
+[INFO]: 2021-10-18 03:48:17   		 [ Client: c2 sending request to all the validators. REQUEST - c2 - 0 ]
+[INFO]: 2021-10-18 03:48:19   		 [ Client: c2 sending request to all the validators. REQUEST - c2 - 1 ]
+[INFO]: 2021-10-18 03:48:21   		 [ Client: c2 sending request to all the validators. REQUEST - c2 - 2 ]
+[INFO]: 2021-10-18 03:48:27   		 [ Client: c2 received result for the command from the validator v2 for  command c2 - 0 ]
+[INFO]: 2021-10-18 03:48:27   		 [ Client: c2 received result for the command from the validator v1 for  command c2 - 2 ]
+[INFO]: 2021-10-18 03:48:27   		 [ Client: c2 received result for the command from the validator v2 for  command c2 - 1 ]
+[INFO]: 2021-10-18 03:48:27   		 [ Client: c2 terminating. ]
+######################## TEST CASE 6 : 2 Clients - 2 Command. Number of validators - 7 Logger for Client: c2 ######################## 
+
+[INFO]: 2021-10-18 03:48:38   		 [ Client: c2 sending request to all the validators. REQUEST - c2 - 0 ]
+[INFO]: 2021-10-18 03:48:40   		 [ Client: c2 sending request to all the validators. REQUEST - c2 - 1 ]
+[INFO]: 2021-10-18 03:48:45   		 [ Client: c2 received result for the command from the validator v2 for  command c2 - 0 ]
+[INFO]: 2021-10-18 03:48:45   		 [ Client: c2 received result for the command from the validator v2 for  command c2 - 1 ]
+[INFO]: 2021-10-18 03:48:45   		 [ Client: c2 terminating. ]
+######################## TEST CASE 8 : Client - 3 Commands 1 but  One Client - Faulty  Logger for Client: c2 ######################## 
+
+[INFO]: 2021-10-18 03:48:56   		 [ Client: c2 sending request to all the validators. REQUEST - c2 - 0 ]
+[INFO]: 2021-10-18 03:48:59   		 [ Client: c2 received result for the command from the validator v2 for  command c2 - 0 ]
+[INFO]: 2021-10-18 03:48:59   		 [ Client: c2 terminating. ]
+######################## TEST CASE 9 : One Validator - Faulty Logger for Client: c2 ######################## 
+
+[INFO]: 2021-10-18 03:52:25   		 [ Client: c2 sending request to all the validators. REQUEST - c2 - 0 ]
+[INFO]: 2021-10-18 03:52:29   		 [ Client: c2 received result for the command from the validator v2 for  command c2 - 0 ]
+[INFO]: 2021-10-18 03:52:29   		 [ Client: c2 terminating. ]

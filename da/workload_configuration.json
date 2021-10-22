@@ -1,0 +1,194 @@
+﻿[
+  {
+
+    "_comment": "TEST CASE 1 : One Client - 1 Command",
+    "number_of_clients": 1,
+    "number_of_faulty_client":0,
+    "number_of_validators": 4,
+    "number_of_faulty_validators": 0,
+    "F": 1,
+    "seed_for_random_numbers": 1,
+    "value_for_delta_for_timeout": 2,
+    "delta_for_pacemaker": 0.5,
+    "duplicate_message" : 0,
+    "workload_for_client": {
+      "number_of_request": 1,
+      "delay_between_request": 2
+    },
+      "workload_for_validator": {
+      "number_of_validators_getting_timed_out": 0,
+      "round_getting_timeout": 1,
+      "timeout_duration": 3
+    }
+  },{
+
+    "_comment": "TEST CASE 2 : One Client - 10 Command",
+    "number_of_clients": 1,
+  "number_of_faulty_client":0,
+    "number_of_validators": 4,
+    "number_of_faulty_validators": 0,
+  "F": 1,
+    "seed_for_random_numbers": 1,
+    "value_for_delta_for_timeout": 2,
+    "delta_for_pacemaker": 0.5,
+    "duplicate_message" : 0,
+    "workload_for_client": {
+      "number_of_request": 10,
+      "delay_between_request": 2
+    },
+      "workload_for_validator": {
+      "number_of_validators_getting_timed_out": 0,
+      "round_getting_timeout": 1,
+      "timeout_duration": 3
+    }
+  },{
+
+  "_comment": "TEST CASE 3 : 3 Clients - 1 Command ",
+  "number_of_clients": 3,
+  "number_of_faulty_client":0,
+  "number_of_validators": 4,
+  "number_of_faulty_validators": 0,
+  "F": 1,
+  "seed_for_random_numbers": 1,
+  "value_for_delta_for_timeout": 2,
+  "delta_for_pacemaker": 0.5,
+  "duplicate_message" : 0,
+  "workload_for_client": {
+    "number_of_request": 1,
+    "delay_between_request": 2
+  },
+    "workload_for_validator": {
+    "number_of_validators_getting_timed_out": 0,
+    "round_getting_timeout": 1,
+    "timeout_duration": 3
+  }
+},{
+
+  "_comment": "TEST CASE 4 : 3 Client - 3 commands with 1 validator timeout",
+  "number_of_clients": 3,
+  "number_of_faulty_client":0,
+  "number_of_validators": 4,
+  "number_of_faulty_validators": 0,
+  "F": 1,
+  "seed_for_random_numbers": 1,
+  "value_for_delta_for_timeout": 2,
+  "delta_for_pacemaker": 0.5,
+  "duplicate_message" : 0,
+  "workload_for_client": {
+    "number_of_request": 3,
+    "delay_between_request": 2
+  },
+    "workload_for_validator": {
+    "number_of_validators_getting_timed_out": 1,
+    "round_getting_timeout": 1,
+    "timeout_duration": 3
+  }
+},{
+
+  "_comment": "TEST CASE 5 : 1 Client - 3 commands with 3 validator timeout. TC is formed",
+  "number_of_clients": 1,
+  "number_of_faulty_client":0,
+  "number_of_validators": 4,
+  "number_of_faulty_validators": 0,
+  "F": 1,
+  "seed_for_random_numbers": 1,
+  "value_for_delta_for_timeout": 2,
+  "delta_for_pacemaker": 0.5,
+  "duplicate_message" : 0,
+  "workload_for_client": {
+    "number_of_request": 3,
+    "delay_between_request": 2
+  },
+    "workload_for_validator": {
+    "number_of_validators_getting_timed_out": 3,
+    "round_getting_timeout": 1,
+    "timeout_duration": 3
+  }
+},{
+
+  "_comment": "TEST CASE 6 : 2 Clients - 2 Command. Number of validators - 7",
+  "number_of_clients": 2,
+  "number_of_faulty_client":0,
+  "number_of_validators": 7,
+  "number_of_faulty_validators": 0,
+  "F": 2,
+  "seed_for_random_numbers": 1,
+  "value_for_delta_for_timeout": 2,
+  "delta_for_pacemaker": 0.5,
+  "duplicate_message" : 0,
+  "workload_for_client": {
+    "number_of_request": 2,
+    "delay_between_request": 2
+  },
+    "workload_for_validator": {
+    "number_of_validators_getting_timed_out": 0,
+    "round_getting_timeout": 1,
+    "timeout_duration": 3
+  }
+},
+{
+
+  "_comment": "TEST CASE 7 : One Client - 3 Commands",
+  "number_of_clients": 1,
+  "number_of_faulty_client":0,
+  "number_of_validators": 4,
+  "number_of_faulty_validators": 0,
+  "F": 1,
+  "seed_for_random_numbers": 1,
+  "value_for_delta_for_timeout": 2,
+  "delta_for_pacemaker": 0.5,
+  "duplicate_message" : 1,
+  "workload_for_client": {
+    "number_of_request": 3,
+    "delay_between_request": 2
+  },
+    "workload_for_validator": {
+    "number_of_validators_getting_timed_out": 0,
+    "round_getting_timeout": 1,
+    "timeout_duration": 3
+  }
+},
+  {
+
+ "_comment": "TEST CASE 8 : Client - 3 Commands 1 but  One Client - Faulty ",
+ "number_of_clients": 3,
+ "number_of_faulty_client":0,
+ "number_of_validators": 4,
+ "number_of_faulty_validators": 0,
+    "F": 1,
+ "seed_for_random_numbers": 1,
+ "value_for_delta_for_timeout": 2,
+ "delta_for_pacemaker": 0.5,
+ "duplicate_message" : 0,
+ "workload_for_client": {
+   "number_of_request": 1,
+   "delay_between_request": 2
+ },
+   "workload_for_validator": {
+   "number_of_validators_getting_timed_out": 0,
+   "round_getting_timeout": 1,
+   "timeout_duration": 3
+ }
+},
+  {
+"_comment": "TEST CASE 9 : One Validator - Faulty",
+"number_of_clients": 3,
+"number_of_faulty_client":0,
+"number_of_validators": 4,
+"number_of_faulty_validators": 1,
+"F": 1,
+"seed_for_random_numbers": 1,
+"value_for_delta_for_timeout": 2,
+"delta_for_pacemaker": 0.5,
+"duplicate_message" : 0,
+"workload_for_client": {
+  "number_of_request": 1,
+  "delay_between_request": 2
+},
+  "workload_for_validator": {
+  "number_of_validators_getting_timed_out": 0,
+  "round_getting_timeout": 1,
+  "timeout_duration": 3
+}
+}
+]
